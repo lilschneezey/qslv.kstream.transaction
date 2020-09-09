@@ -1,0 +1,16 @@
+metadata:
+  name: bs-${project.artifactId}
+data:
+  application.properties: |
+    logging.level.qslv=DEBUG
+    qslv.enhanced-request-topic=qks.enhanced.request
+    qslv.response-topic=qks.posting.response
+    qslv.transaction-log-topic=qks.transaction.log
+    qslv.balance-log-topic=qks.balance.log.state.store
+    qslv.balance-store-name=qks.balance.store
+    qslv.kafka-consumer-properties-path=/deployments/config/kafka-consumer/kafka.properties
+    qslv.kafka-producer-properties-path=/deployments/config/kafka-producer/kafka.properties
+    qslv.kafka-streams-properties-path=/deployments/config/kafka-streams/kafka.properties
+    management.endpoint.health.show-details=always
+    management.endpoint.health.show-components=always
+    

@@ -1,0 +1,13 @@
+  kind: "ConfigMap"
+  apiVersion: "v1"
+  metadata:
+    name: kafka-producer-${project.artifactId}
+  data:
+    kafka.properties: |
+      bootstrap.servers=kafka-broker.qslv-kstream.svc:9092
+      retries=3
+      max.in.flight.requests.per.connection=1
+      request.timeout.ms=15000
+      retry.backoff.ms=1000
+      schema.registry.url=http://schema-registry.qslv-kstream.svc:8081
+  

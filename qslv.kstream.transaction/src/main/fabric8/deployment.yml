@@ -1,0 +1,59 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - volumeMounts:
+            - name: application-config
+              mountPath: "/deployments/config"
+              readOnly: true
+            - name: kafka-streams-config
+              mountPath: "/deployments/config/kafka-streams"
+              readOnly: true
+            - name: kafka-consumer-config
+              mountPath: "/deployments/config/kafka-consumer"
+              readOnly: true
+            - name: kafka-producer-config
+              mountPath: "/deployments/config/kafka-producer"
+              readOnly: true
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: openshift
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 180
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 20
+      volumes:
+        - name: kafka-streams-config
+          configMap:
+            name: kafka-streams-${project.artifactId}
+            items:
+            - key: kafka.properties
+              path: kafka.properties
+        - name: kafka-consumer-config
+          configMap:
+            name: kafka-consumer-${project.artifactId}
+            items:
+            - key: kafka.properties
+              path: kafka.properties
+        - name: kafka-producer-config
+          configMap:
+            name: kafka-producer-${project.artifactId}
+            items:
+            - key: kafka.properties
+              path: kafka.properties
+        - name: application-config
+          configMap:
+            name: bs-${project.artifactId}
+            items:
+            - key: application.properties
+              path: application.properties
+              
